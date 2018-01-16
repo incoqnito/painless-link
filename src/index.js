@@ -37,18 +37,30 @@ const getDependencyTree = (_path) => {
 
 }
 
-const linkedDependencyTree = (tree) => {
-
-  const recursiveLinking = (lnToDep) => (lnDep) => {
+const linkGlobal = (tree) => {
+  console.log('linking dependency as globals...')
+  const recursiveLinking = (lnDep) => {
     shell.cd(lnDep.path)
     if(shell.exec("npm link", execOptions).code !== 0) {
       console.log(`[FAILED] linking global ${lnDep.name}`.red);
       process.exit(1);
     }
+    lnDep.linkedDependencies.forEach(recursiveLinking)
+  }
+
+  tree.linkedDependencies.forEach(recursiveLinking)
+
+}
+
+const linkedDependencyTree = (tree) => {
+  console.log('linking the dependency tree...')
+  const recursiveLinking = (lnToDep) => (lnDep) => {
     shell.cd(lnToDep.path)
     if(shell.exec(`npm link ${lnDep.name}`, execOptions).code !== 0) {
       console.log(`[FAILED] linking ${lnDep.name} to ${lnToDep.name}`.red);
       process.exit(1);
+    } else {
+
     }
     
     lnDep.linkedDependencies.forEach(recursiveLinking(lnDep))
@@ -79,8 +91,9 @@ export default function() {
   execPrechecks()
 
   let tree = getDependencyTree(process.cwd())
+  let global = linkGlobal(tree)
   let result = linkedDependencyTree(tree)
 
-  shell.echo("Successfully linked packages")
+  shell.echo("Successfully linked packages".green)
   printResult(tree)
 }
