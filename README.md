@@ -43,12 +43,19 @@ Therefore, we decided to create ‘painless-link’ - a configurable and fully a
 
 ### Every linked dependency should contain a `package.json`
 
+## Contributing
+
+Any contribution is highly appreciated - just open a PR containing your changes and we will have a look at it ASAP!
+
+Want to contribute, but don't know what to do? Don't worry, we got you! Have a look at the [roadmap](#roadmap) to find out what's missing. Thanks in advance! 🤩
+
 ## Roadmap
-Every project can be improved - this also applies to this package 🤓
-- make it more painless 😋
-- better error handling
-- own symlink system, for avoiding collision with existing linked npm packages
-- configuration file for extending `painless-link`
-- create test cases for node, webpack, etc.
-- build CLI interface for more options like verbose mode
-- environment specific linking like only linking in `NODE_ENV=development`
+
+Every project can be improved - this also applies to this package 🤓 here is what we have in mind regarding the future of this package:
+  - make it easier 😋
+  - better error handling
+  - own symlink system to avoid collisions with any external usage of `nmp link` (and to avoid permission problems caused by `npm link` due to it linking everything into a global/systemwide folder)
+  - configuration file
+  - add tests
+  - build an advanced CLI for more options e.g. a verbose mode
+  - environment specific linking like only linking in `NODE_ENV=development`
