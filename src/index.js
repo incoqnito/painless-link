@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import path from 'path'
-import shell from 'shelljs'
-import colors from 'colors'
-import asciitree from 'ascii-tree'
+const path = require('path')
+const shell = require('shelljs')
+const colors = require('colors')
+const asciitree = require('ascii-tree')
 
 const executionPath = process.cwd();
 
@@ -72,6 +72,7 @@ const linkedDependencyTree = (tree) => {
 
 const printResult = (tree) => {
   const level = 1
+  shell.echo("Dependency Tree:".green)
 
   const generateRecursiveTree = (level) => (str, node) => {
     const newLevel = level + 1
@@ -84,10 +85,10 @@ const printResult = (tree) => {
   let input = tree.linkedDependencies.reduce(generateRecursiveTree(level), `#${tree.name}\r\n`) 
   var output = asciitree.generate(input);
 
-  shell.echo(output.grey)
+  shell.echo(output)
 }
 
-export default function() {
+module.exports.linkCommand = function() {
   execPrechecks()
 
   let tree = getDependencyTree(process.cwd())
@@ -95,5 +96,11 @@ export default function() {
   let result = linkedDependencyTree(tree)
 
   shell.echo("Successfully linked packages".green)
+  printResult(tree)
+}
+
+
+module.exports.showCommand = function() {
+  let tree = getDependencyTree(process.cwd())
   printResult(tree)
 }

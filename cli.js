@@ -1,4 +1,19 @@
 #!/usr/bin/env node
-var cli = require('./lib/index.js').default
+var program = require('commander')
 
-cli()
+const { linkCommand, showCommand } = require('./src/index.js')
+
+
+program
+  .version(require('./package.json').version, '-v, --version')
+  
+program  
+  .command('show')
+  .action(showCommand)
+
+program
+  .command('link')
+  .action(linkCommand)
+  
+  
+program.parse(process.argv);
