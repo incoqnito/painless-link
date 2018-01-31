@@ -9,6 +9,9 @@ However we found out, that we had to manually execute `npm link <SUBMODULE>` eve
 With a rising number of submodules, the number of symlinks also increased - meaning, that we had to __type `npm link <SUBMODULE>` dozens of times after every `npm install`__.
 Therefore, we decided to create ‘painless-link’ - a configurable and fully automatic symlink solution utilizing `npm link`. 🤩
 
+
+
+
 ## Installation
 
 **Global**
@@ -43,7 +46,10 @@ Therefore, we decided to create ‘painless-link’ - a configurable and fully a
 
 ### Every linked dependency should contain a `package.json`
 
-## Contributing
+
+
+
+## Contribution
 
 Any contribution is highly appreciated - just open a PR containing your changes and we will have a look at it ASAP!
 
