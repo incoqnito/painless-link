@@ -18,11 +18,18 @@ const execPrechecks = () => {
   }
 }
 
+const checkedPaths = []
+
 const getDependencyTree = (_path) => {
-  const { 
-    name, 
+  const {
+    name,
     linkedDependencies: linkedDepsObj = {}
-  } = require(path.join(_path, './package.json')) 
+  } = require(path.join(_path, './package.json'))
+
+  if (checkedPaths.includes(_path)) {
+    return { name, path: _path, linkedDependencies: [] }
+  }
+  checkedPaths.push(_path)
 
   const linkedDepsArr = Object.keys(linkedDepsObj)
     .map((key) => path.join(_path,linkedDepsObj[key]))
@@ -40,6 +47,7 @@ const getDependencyTree = (_path) => {
 const linkGlobal = (tree) => {
   console.log('linking dependency as globals...')
   const recursiveLinking = (lnDep) => {
+    console.log(lnDep.name)
     shell.cd(lnDep.path)
     if(shell.exec("npm link", execOptions).code !== 0) {
       console.log(`[FAILED] linking global ${lnDep.name}`.red);
@@ -62,7 +70,7 @@ const linkedDependencyTree = (tree) => {
     } else {
 
     }
-    
+
     lnDep.linkedDependencies.forEach(recursiveLinking(lnDep))
   }
 
@@ -77,12 +85,12 @@ const printResult = (tree) => {
   const generateRecursiveTree = (level) => (str, node) => {
     const newLevel = level + 1
     const count = newLevel + 1
-    return str += node.linkedDependencies.length !== 0 
-      ? node.linkedDependencies.reduce(generateRecursiveTree(newLevel), `${Array(count).join('#')}${node.name}\r\n`) 
+    return str += node.linkedDependencies.length !== 0
+      ? node.linkedDependencies.reduce(generateRecursiveTree(newLevel), `${Array(count).join('#')}${node.name}\r\n`)
       : `${Array(count).join('#')}${node.name}\r\n`
   }
 
-  let input = tree.linkedDependencies.reduce(generateRecursiveTree(level), `#${tree.name}\r\n`) 
+  let input = tree.linkedDependencies.reduce(generateRecursiveTree(level), `#${tree.name}\r\n`)
   var output = asciitree.generate(input);
 
   shell.echo(output)

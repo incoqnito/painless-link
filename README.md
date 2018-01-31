@@ -1,31 +1,32 @@
-# painless-link
+# painless-link 🤩
 
-The motivation for ‘painless-link’ has arisen when splitting a large project into many small submodules. These submodules should be used in several projects. To ensure this, we have linked the various submodules with the packages via ‘npm link’.
+## Motivation
 
-With the number of submodules, the number of symlinks has also increased. Therefore, we decided to use ‘painless-link’ - a configurable and fully automatic symlink solution based on ‘npm link’. 
+The need for something like `painless-link` has arisen while trying to split a large project into many small submodules (for various reasons).
+In order to do so and to be able to continue using __HMR__, we linked the various submodules to our package via `npm link`.
+However we found out, that we had to manually execute `npm link <SUBMODULE>` every time we did an `npm install` in our root project.
 
-In the main project, the symlinks are specified in the ‘package.json’ in property ‘linkedDependencies’. ‘painless-link` tracks all ‘linkedDependencies’ and resolves their ‘linkedDependencies’ recursively. No time-consuming Bash scripts and / or no time-consuming navigation through the individual subprojects 💪 
-
-Great solutions such as [Lerna.js](https://github.com/lerna/lerna) were unthinkable at the time, as the VCS SVN was used.
+With a rising number of submodules, the number of symlinks also increased - meaning, that we had to __type `npm link <SUBMODULE>` dozens of times after every `npm install`__.
+Therefore, we decided to create ‘painless-link’ - a configurable and fully automatic symlink solution utilizing `npm link`. 🤩
 
 ## Installation
 
-**As global**
+**Global**
 
 `npm install -g painless-link`
 
-**or as package dependency**
+**...or as a package dependency**
 
 `npm install --save-dev painless-link`
 
-## How to use
+## Usage
 
-1. Add to `package.json` every dependency which should be resolved as following:
+1. Add every dependency which should be resolved as following to your `package.json`:
 
 ```json
 {
   "linkedDepedancies": {
-    "dependencyA": "../modules/dependencyA" 
+    "dependencyA": "../modules/dependencyA"
   }
 }
 ```
@@ -35,15 +36,15 @@ Great solutions such as [Lerna.js](https://github.com/lerna/lerna) were unthinka
 ```json
 {
   "scripts": {
-    "postinstall": "painless-link"
+    "postinstall": "painless-link link"
   }
 }
 ```
 
-### Every linked dependency should have a `package.json`
+### Every linked dependency should contain a `package.json`
 
 ## Roadmap
-Every project can be optimised and also this package has a huge roadmap 🤓
+Every project can be improved - this also applies to this package 🤓
 - make it more painless 😋
 - better error handling
 - own symlink system, for avoiding collision with existing linked npm packages
