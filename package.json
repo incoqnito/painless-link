@@ -1,10 +1,9 @@
 {
   "name": "painless-link",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
-    "development": "babel src --out-dir lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": "./cli.js",
@@ -13,11 +12,7 @@
   "dependencies": {
     "ascii-tree": "^0.3.0",
     "colors": "^1.1.2",
+    "commander": "^2.13.0",
     "shelljs": "^0.7.8"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.37",
-    "@babel/core": "^7.0.0-beta.37",
-    "@babel/preset-env": "^7.0.0-beta.37"
   }
 }
