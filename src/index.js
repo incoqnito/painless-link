@@ -47,7 +47,6 @@ const getDependencyTree = (_path) => {
 const linkGlobal = (tree) => {
   console.log('linking dependency as globals...')
   const recursiveLinking = (lnDep) => {
-    console.log(lnDep.name)
     shell.cd(lnDep.path)
     if(shell.exec("npm link", execOptions).code !== 0) {
       console.log(`[FAILED] linking global ${lnDep.name}`.red);
