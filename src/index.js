@@ -27,7 +27,7 @@ const getDependencyTree = (_path) => {
   } = require(path.join(_path, './package.json'))
 
   if (checkedPaths.includes(_path)) {
-    return { name, path: _path, linkedDependencies: [] }
+    return { name, path: _path, linkedDependencies: [], duplicate: true }
   }
   checkedPaths.push(_path)
 
@@ -47,6 +47,10 @@ const getDependencyTree = (_path) => {
 const linkGlobal = (tree) => {
   console.log('linking dependency as globals...')
   const recursiveLinking = (lnDep) => {
+    if (lnDep.duplicate) {
+      return
+    }
+
     shell.cd(lnDep.path)
     if(shell.exec("npm link", execOptions).code !== 0) {
       console.log(`[FAILED] linking global ${lnDep.name}`.red);
